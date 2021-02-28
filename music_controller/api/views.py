@@ -17,6 +17,19 @@ class RoomView(generics.ListAPIView):
     serializer_class = RoomSerializer
 
 
+class GetRoom(APIView):
+    serializer_class = RoomSerializer
+    lookup_url_kwarg = 'code'
+
+    def get(self, request, format=None):
+        code = request.GET.get(self.lookup_url_kwarg)
+        if code != None:
+            room = Room.objects.filter(code=code)
+            if(len(room)) > 0:
+                data=RoomSerializer(room[0]).data
+                )
+
+
 class CreateRoomView(APIView):
     serializer_class = CreateSerializer
     

@@ -1,9 +1,36 @@
-import { FormControl, FormControlLabel, FormHelperText, Grid, Radio, RadioGroup, Typography } from '@material-ui/core'
-import React from 'react'
+import { Button, FormControl, FormControlLabel, FormHelperText, Grid,  Radio, RadioGroup, TextField, Typography } from '@material-ui/core'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
+
 
 function CreateRoomPage() {
+    const [votesToSkip, setVotesToSkip] = useState(2);
+    const[guestCanPause, setGuestCanPause] = useState(false);
+
+    const handleGuestCanPauseChange = (event) => {
+        setGuestCanPause(event.target.value == 'true' ? true:false)
+    }
+    
+    const handleVotesChange = (event) => {
+        setVotesToSkip(event.target.value)
+    }
+    const handleRoomButtonPress = (event) => {
+       const requestOptions = {
+           method:'POST',
+           headers:{'Content-Type':'application/json'},
+           body:JSON.stringify({
+               votes_to_skip:votesToSkip,
+               guest_can_pause:guestCanPause
+           })
+       }
+
+       fetch('/api/create-dom', requestOptions)
+       .then((response) => response.json())
+       .then(data => console.log(data))
+    }
+    
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} style={{width:'100%'}}>
             <Grid item xs={12} align='center'>
                 <Typography component='h4' variant='h4'>
                     Create A Room
@@ -18,7 +45,7 @@ function CreateRoomPage() {
                     </div>
                     </FormHelperText>
 
-                    <RadioGroup row defaultValue="true">
+                    <RadioGroup row defaultValue="true" onChange={handleGuestCanPauseChange}>
                         <FormControlLabel
                             value="true"
                             control={<Radio color="primary" />}
@@ -39,8 +66,12 @@ function CreateRoomPage() {
                     <TextField
                         required={true}
                         type='number'
-                        defaultValue={defaultValue}
-                        inputProps={{ min: 1 }} />
+                        defaultValue={votesToSkip}
+                        onChange={handleVotesChange}
+                        inputProps={{ 
+                            min: 1, 
+                            style:{textAlign:'center'} 
+                            }} />
 
                     <FormHelperText>
                         <div align="center">
@@ -48,6 +79,24 @@ function CreateRoomPage() {
                         </div>
                     </FormHelperText>
                 </FormControl>
+            </Grid>
+
+            <Grid item xs={12} align="center">
+                <Button
+                color="primary"
+                variant="contained"
+                onClick={handleRoomButtonPress}
+                >Create a Room</Button>
+            </Grid>
+
+
+            <Grid item xs={12} align="center">
+                <Button
+                color="secondary"
+                variant="contained"
+                to="/"
+                component={Link}
+                >Back</Button>
             </Grid>
         </Grid>
     )
