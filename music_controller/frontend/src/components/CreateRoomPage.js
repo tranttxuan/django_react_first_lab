@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
 
-function CreateRoomPage() {
+function CreateRoomPage(props) {
     const [votesToSkip, setVotesToSkip] = useState(2);
     const[guestCanPause, setGuestCanPause] = useState(false);
 
@@ -15,6 +15,7 @@ function CreateRoomPage() {
         setVotesToSkip(event.target.value)
     }
     const handleRoomButtonPress = (event) => {
+    console.log("object")
        const requestOptions = {
            method:'POST',
            headers:{'Content-Type':'application/json'},
@@ -24,9 +25,14 @@ function CreateRoomPage() {
            })
        }
 
-       fetch('/api/create-dom', requestOptions)
+       console.log(requestOptions)
+
+       fetch('/api/create-room', requestOptions)
        .then((response) => response.json())
-       .then(data => console.log(data))
+       .then(data =>{
+            console.log(data)
+        props.history.push(`room/${data.code}`)
+        })
     }
     
     return (
