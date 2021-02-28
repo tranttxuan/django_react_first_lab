@@ -9,7 +9,7 @@ import RoomJoinPage from './RoomJoinPage';
 
 function App() {
     return (
-        <div style={{ width: "100%" }}>
+        <div className="center">
 
             <Switch>
                 <Route exact path="/" component={HomePage} />
