@@ -4,19 +4,8 @@ import { Button, ButtonGroup, Typography } from '@material-ui/core';
 import { Link, Redirect } from 'react-router-dom';
 
 
-function HomePage() {
-    const [roomCode, setRoomCode] = useState('');
-
-    useEffect(() => {
-        fetch('/api/user-in-room')
-            .then(res => res.json())
-            .then(data => setRoomCode(data.code))
-    }, [])
-    console.log("check", roomCode)
+function HomePage(props) {  
     return (
-        roomCode
-            ? <Redirect to={`/room/${roomCode}`} />
-            :
             <Grid container spacing={3}>
                 <Grid item xs={12} align="center">
                     <Typography variant='h3' compact='h3'>

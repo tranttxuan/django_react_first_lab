@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Switch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Redirect, Route, Switch } from 'react-router-dom';
 // import { render } from "react-dom";
 import CreateRoomPage from './CreateRoomPage';
 import HomePage from './HomePage';
@@ -8,14 +8,35 @@ import RoomJoinPage from './RoomJoinPage';
 
 
 function App() {
+    const [roomCode, setRoomCode] = useState(null);
+    const leaveRoom = () => {
+        setRoomCode(null)
+    };
+
+    useEffect(() => {
+        fetch('/api/user-in-room')
+            .then(res => res.json())
+            .then(data => setRoomCode(data.code))
+    }, [])
+
     return (
         <div className="center">
 
             <Switch>
-                <Route exact path="/" component={HomePage} />
+                <Route exact path="/"
+                    render={() => {
+                        return roomCode
+                            ? <Redirect to={`/room/${roomCode}`} />
+                            : <HomePage />
+                    }}
+                />
                 <Route exact path="/join" component={RoomJoinPage} />
                 <Route exact path="/create" component={CreateRoomPage} />
-                <Route exact path="/room/:roomCode" component={Room} />
+                <Route exact path="/room/:roomCode"
+                    render={props => {
+                        return <Room {...props} leaveRoomCallBack={leaveRoom} />
+                    }}
+                />
             </Switch>
 
         </div>
