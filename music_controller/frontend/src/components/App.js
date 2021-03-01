@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 // import { render } from "react-dom";
 import CreateRoomPage from './CreateRoomPage';
 import HomePage from './HomePage';
+import Info from './Info';
 import Room from './Room';
 import RoomJoinPage from './RoomJoinPage';
 
@@ -37,6 +38,7 @@ function App() {
                         return <Room {...props} leaveRoomCallBack={leaveRoom} />
                     }}
                 />
+                <Route exact path="/info" component={Info} />
             </Switch>
 
         </div>

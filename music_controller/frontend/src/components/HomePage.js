@@ -21,6 +21,7 @@ function HomePage(props) {
                     >
                         <Button to="/join" component={Link} color='primary'> Join a Room   </Button>
                         <Button to="/create" component={Link} color='secondary'> Create a Room   </Button>
+                        <Button to="/info" component={Link} color='primary'> Info  </Button>
                     </ButtonGroup>
                 </Grid>
             </Grid>
