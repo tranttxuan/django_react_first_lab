@@ -22,14 +22,21 @@
     "style-loader": "^2.0.0",
     "webpack": "^5.24.2",
     "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
     "webpack-hook-plugin": "^1.0.7"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "axios": "^0.21.1",
     "react-router-dom": "^5.2.0",
     "webpack-bundle-tracker": "^1.0.0-alpha.1"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }
